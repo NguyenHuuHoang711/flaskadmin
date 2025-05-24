@@ -35,3 +35,15 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
+# --- Deploy lên Render ---
+    - name: Trigger deploy on Render
+      env:
+        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+        RENDER_REGION: ${{ secrets.RENDER_REGION }}
+      run: |
+        echo "Triggering deploy on Render..."
+        curl -X POST "https://api.render.com/deploy/srv-d0mb4jjuibrs73ei7uo0" \
+          -H "Authorization: Bearer MY_API_KEY" \
+          -H "Content-Type: application/json" \
+          -d '{"clearCache": true}'
